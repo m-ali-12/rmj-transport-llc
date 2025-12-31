@@ -1,0 +1,627 @@
+
+        /* Base Styles */
+        html, body {
+            height: 100%; /* Keep height for body to allow stretching for footer if needed */
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif; /* Modern, readable font */
+            background: linear-gradient(135deg, #f0f4f8 0%, #dbe2ed 100%); /* Soft, modern gradient */
+            color: #333;
+            display: flex; /* Use flexbox for the body */
+            flex-direction: column; /* Stack children vertically */
+            align-items: center; /* Center content horizontally */
+            overflow-y: auto; /* Allow the body to scroll vertically */
+            padding-top: 80px; /* **Crucial:** Push content down to clear fixed navbar */
+            padding-left: 25px; /* Enhanced horizontal padding */
+            padding-right: 25px; /* Enhanced horizontal padding */
+            position: relative;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            background: #2c7be5; /* Stronger primary blue */
+            padding: 12px 30px; /* Slightly more generous padding */
+            border-radius: 0;
+            margin-bottom: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Softer shadow */
+            width: 100%;
+            max-width: none;
+            box-sizing: border-box;
+            position: fixed; /* Keep navbar fixed */
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+        .navbar .site-title {
+            font-size: 2rem; /* Larger title */
+            font-weight: 700;
+            color: #ffffff;
+            flex-grow: 1;
+            margin-right: 25px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+        }
+        .menu-icon {
+            display: none; /* Hidden by default on larger screens */
+            color: #ffffff;
+            font-size: 2.2rem; /* Larger icon */
+            cursor: pointer;
+            padding: 5px;
+            z-index: 1001;
+        }
+        .navbar-links {
+            display: flex;
+            gap: 25px; /* More spacing for links */
+        }
+        .navbar-links a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 25px; /* Pill-shaped buttons */
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            font-weight: 500;
+            background-color: rgba(255, 255, 255, 0.15); /* Slightly transparent background */
+        }
+        .navbar-links a:hover {
+            background-color: rgba(255, 255, 255, 0.3); /* More opaque on hover */
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Main Container Styles */
+        .container {
+            background: #ffffff;
+            padding: 35px; /* Increased padding */
+            border-radius: 20px; /* More rounded corners */
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15); /* Deeper shadow */
+            width: 100%;
+            max-width: 1280px; /* Slightly wider max-width */
+            margin-top: 0; /* No margin-top here as body padding handles spacing */
+            margin-bottom: 30px; /* Add bottom margin to separate from footer */
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1; /* Allow container to grow and push footer down */
+        }
+        h1 {
+            display: none;
+        }
+
+        /* Form Elements */
+        label {
+            display: block;
+            margin-bottom: 8px; /* More space below label */
+            font-weight: 600;
+            color: #4a5568; /* Softer text color */
+            font-size: 1.08rem;
+        }
+        textarea, input[type="text"], input[type="date"], input[type="number"], input[type="email"], select {
+            width: 100%;
+            margin-bottom: 18px; /* Default margin, overridden in combined groups */
+            padding: 14px; /* More padding */
+            font-size: 1rem;
+            border: 1px solid #cbd5e0; /* Softer border color */
+            border-radius: 10px; /* Slightly more rounded */
+            box-sizing: border-box;
+            transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            background-color: #f7fafc; /* Lighter background */
+        }
+        textarea:focus, input:focus, select:focus {
+            border-color: #2c7be5; /* Blue focus border */
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(44, 123, 229, 0.2); /* Softer, broader glow */
+        }
+        #inputData { /* Specific style for raw data textarea */
+            resize: none; /* Disable manual resizing */
+            min-height: 100px; /* Smaller height */
+        }
+        #formattedMessage {
+            background: #e6f0ff; /* Lighter blue background */
+            border: 2px solid #5a9cf8; /* Solid border with blue */
+            min-height: 120px; /* Smaller height */
+            resize: vertical;
+            flex-grow: 1;
+            font-family: monospace; /* Monospaced font for code/data-like output */
+            color: #1a202c; /* Darker text */
+        }
+
+        /* Form Rows and Groups (General) */
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px; /* Increased gap for better spacing */
+            margin-bottom: 25px;
+            width: 100%;
+        }
+        .form-group {
+            flex-grow: 1;
+            flex-shrink: 1;
+            flex-basis: 0;
+            min-width: 220px; /* Slightly larger min-width */
+        }
+        /* Specific adjustment for the first row to keep 4 items in a row */
+        .form-row.top-inputs .form-group {
+            flex-basis: calc(25% - 18.75px); /* Adjusted calc for 25px gap */
+            min-width: 190px;
+        }
+        .form-group.full-width {
+            flex-basis: 100%;
+        }
+        .form-group label {
+            margin-bottom: 5px;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            margin-bottom: 0;
+        }
+        .form-group textarea {
+            /* min-height is now defined directly for #inputData and #formattedMessage */
+        }
+
+        /* Flex Container for Raw Data + Buttons */
+        .raw-data-section {
+            display: flex;
+            flex-direction: row;
+            gap: 25px; /* Consistent gap */
+            margin-bottom: 25px;
+            align-items: flex-end; /* Align buttons to the bottom of the textarea */
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .formatted-message-section {
+            display: flex;
+            flex-direction: row;
+            gap: 25px;
+            margin-bottom: 25px;
+            align-items: center; /* Changed to center to align tick message */
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+
+        .raw-data-section .form-group,
+        .formatted-message-section .form-group {
+            flex-grow: 1;
+            flex-basis: 0;
+            min-width: 300px; /* Larger min-width for textareas */
+        }
+        .raw-data-section .form-group textarea,
+        .formatted-message-section .form-group textarea {
+             margin-bottom: 0;
+        }
+
+        .raw-data-buttons, .formatted-message-buttons {
+            display: flex;
+            flex-direction: column; /* Stack buttons vertically */
+            gap: 12px; /* Slightly larger gap between buttons in column */
+            flex-shrink: 0;
+            align-self: stretch; /* Make buttons stretch to fill available vertical space if textarea is taller */
+            /* Ensure buttons within this group have consistent width */
+            width: 180px; /* Fixed width for the button column on larger screens */
+        }
+        .raw-data-buttons button, .formatted-message-buttons button {
+            margin-top: 0;
+            height: 100%; /* Make buttons fill available height */
+            white-space: nowrap;
+            padding: 12px 20px; /* More generous padding for buttons */
+            font-size: 1.05rem; /* Slightly larger font */
+            font-weight: 600; /* Bolder text */
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1); /* Softer button shadow */
+            border-radius: 8px; /* Slightly more rounded buttons */
+            border: none; /* Ensure no default border */
+            cursor: pointer;
+            /* Ensure buttons take full width of their parent .raw-data-buttons / .formatted-message-buttons */
+            width: 100%;
+            box-sizing: border-box; /* Include padding/border in width */
+        }
+        .raw-data-buttons button:hover, .formatted-message-buttons button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); /* More pronounced shadow on hover */
+        }
+        .raw-data-buttons button:active, .formatted-message-buttons button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Specific Button Colors and Styles */
+        /* Format Button */
+        .format-btn {
+            background: #2c7be5; /* Primary blue */
+            color: #ffffff;
+        }
+        .format-btn:hover {
+            background-color: #246bbd;
+        }
+
+        /* Reset Button */
+        .reset-btn {
+            background: #dc3545; /* Red for reset */
+            color: #ffffff;
+        }
+        .reset-btn:hover {
+            background-color: #c82333;
+        }
+
+        /* Copy Button */
+        .copy-btn {
+            background: #28a745; /* Success green */
+            color: #ffffff;
+        }
+        .copy-btn:hover {
+            background-color: #218838;
+        }
+
+        /* Save Button */
+        .save-btn {
+            background: #ffc107; /* Warning yellow */
+            color: #333333; /* Darker text for contrast */
+            font-weight: 700; /* Bolder text for visibility */
+        }
+        .save-btn:hover {
+            background-color: #e0a800;
+        }
+
+
+        /* Status Messages */
+        .status-message {
+            text-align: center;
+            padding: 16px; /* More padding */
+            margin: 25px 0; /* More margin */
+            border-radius: 12px;
+            font-weight: bold;
+            display: none;
+            animation: fadeIn 0.5s forwards;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background-color: #ffcdd2;
+            color: #d32f2f;
+            border: 1px solid #ef9a9a;
+        }
+        .warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+        }
+        /* Removed .tick as its functionality is now absorbed by .status-message */
+
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 1024px) {
+            .form-row.top-inputs .form-group {
+                flex-basis: calc(50% - 12.5px); /* 2 items per row, adjusted for 25px gap */
+            }
+            .raw-data-section .form-group,
+            .formatted-message-section .form-group {
+                min-width: 280px; /* Slightly adjust min-width for medium screens */
+            }
+            /* Adjust button column width for medium screens */
+            .raw-data-buttons, .formatted-message-buttons {
+                width: 160px; /* Slightly narrower button column */
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-left: 15px; /* Reduced horizontal padding */
+                padding-right: 15px; /* Reduced horizontal padding */
+                padding-top: 60px; /* Adjust padding-top for smaller navbar height */
+            }
+            .navbar {
+                padding: 10px 15px;
+                /* On small screens, title and menu icon are first, links will be toggled */
+                justify-content: space-between;
+            }
+            .navbar .site-title {
+                font-size: 1.7rem;
+                margin-right: 0; /* No margin on smaller screens */
+            }
+            .menu-icon {
+                display: block; /* Show hamburger icon */
+            }
+            .navbar-links {
+                display: none; /* Hide links by default */
+                flex-direction: column; /* Stack links vertically */
+                width: 100%;
+                background: #2c7be5; /* Match navbar background */
+                position: absolute; /* Position relative to navbar */
+                top: 100%; /* Place below the navbar */
+                left: 0;
+                padding: 10px 0; /* Add padding */
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                border-top: 1px solid rgba(255,255,255,0.2);
+                max-height: 0; /* Start hidden */
+                overflow: hidden; /* Hide overflow */
+                transition: max-height 0.3s ease-out, padding 0.3s ease-out; /* Smooth transition */
+            }
+            .navbar-links.active {
+                display: flex; /* Show when active */
+                max-height: 200px; /* Arbitrary max-height for smooth transition */
+                padding: 15px 0; /* More padding when open */
+            }
+            .navbar-links a {
+                padding: 10px 20px; /* Adjust link padding for vertical menu */
+                width: calc(100% - 40px); /* Account for padding */
+                border-radius: 0; /* No pill shape in vertical menu */
+                background-color: transparent; /* Transparent background */
+                text-align: center;
+            }
+            .navbar-links a:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+                transform: none; /* No vertical transform on hover */
+                box-shadow: none;
+            }
+
+            .container {
+                padding: 25px; /* Reduced inner padding */
+                border-radius: 15px; /* Keep some radius on mobile */
+                margin-top: 0; /* No margin-top needed */
+                margin-bottom: 20px; /* Adjusted bottom margin */
+                max-width: none; /* Allow full width */
+            }
+            #inputData {
+                min-height: 90px; /* Smaller height for mobile */
+            }
+            #formattedMessage {
+                min-height: 90px; /* Smaller height for mobile */
+            }
+            .form-row {
+                flex-direction: column; /* Force single column */
+                gap: 15px;
+                margin-bottom: 15px;
+            }
+            .form-group {
+                min-width: unset;
+                width: 100%;
+                flex-basis: auto;
+            }
+            .form-row.top-inputs .form-group {
+                flex-basis: auto;
+            }
+
+            /* Raw Data and Formatted Message Sections on small screens - stack vertically */
+            .raw-data-section, .formatted-message-section {
+                flex-direction: column;
+                align-items: stretch; /* Stretch to full width */
+                gap: 15px; /* Reduced gap when stacking */
+            }
+            .raw-data-section .form-group,
+            .formatted-message-section .form-group {
+                min-width: unset;
+                width: 100%;
+            }
+            .raw-data-buttons, .formatted-message-buttons {
+                flex-direction: row; /* Buttons side-by-side on small screens */
+                justify-content: space-around;
+                align-self: center; /* Center the button group */
+                width: 100%;
+                gap: 10px; /* Small gap when buttons are horizontal */
+                height: auto; /* Allow button container to adapt height */
+                width: 100%; /* Ensure button group takes full width */
+            }
+            .raw-data-buttons button,
+            .formatted-message-buttons button {
+                flex: 1; /* Make buttons share space equally */
+                min-width: unset;
+                padding: 10px; /* Adjust padding */
+                font-size: 0.9rem;
+                height: auto; /* Allow buttons to adjust height automatically on small screens */
+                border-radius: 6px; /* Slightly less rounded */
+            }
+
+            label {
+                font-size: 1rem;
+                margin-bottom: 6px;
+            }
+            textarea, input[type="text"], input[type="date"], input[type="number"], input[type="email"], select {
+                padding: 10px;
+                font-size: 0.95rem;
+                margin-bottom: 10px;
+                border-radius: 8px;
+            }
+            .status-message {
+                padding: 12px;
+                margin: 15px 0;
+            }
+            .tick {
+                font-size: 1.2rem;
+                margin-left: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding-left: 10px;
+                padding-right: 10px;
+                padding-top: 55px;
+            }
+            .navbar { padding: 8px 12px; }
+            .navbar .site-title { font-size: 1.5rem; }
+            .menu-icon { font-size: 1.8rem; }
+            .container { padding: 18px; }
+            textarea, input[type="text"], input[type="date"], input[type="number"], input[type="email"], select {
+                padding: 8px;
+                font-size: 0.85rem;
+            }
+            .raw-data-buttons button,
+            .formatted-message-buttons button {
+                padding: 8px 12px;
+                font-size: 0.8rem;
+            }
+            .status-message {
+                padding: 10px;
+                margin: 10px 0;
+            }
+        }
+
+
+
+
+         .navbar {
+            background: #2c73d2; /* Primary blue */
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Stronger shadow */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-sizing: border-box;
+            /* Optional: Add a gradient for more appeal */
+            background: linear-gradient(to right, #2c73d2, #4a90e2);
+        }
+        .navbar .site-title {
+            font-size: 1.8rem; /* Slightly larger */
+            font-weight: 700;
+            color: white;
+            letter-spacing: 0.8px; /* More prominent spacing */
+            flex-shrink: 0;
+            margin-right: 25px; /* Increased margin */
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2); /* Subtle text shadow */
+        }
+        .navbar-links {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap; /* Allows items to wrap on smaller screens */
+            gap: 15px; /* Consistent spacing */
+            margin: 0; /* Reset default margin */
+            padding: 0; /* Reset default padding */
+            list-style: none; /* Remove bullet points if it were a ul */
+        }
+        .navbar-links a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 8px; /* Slightly more rounded */
+            transition: all 0.3s ease; /* Smooth transition for all properties */
+            font-weight: 500;
+            white-space: nowrap;
+            background-color: rgba(255, 255, 255, 0.1); /* Subtle background for links */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Light shadow for links */
+        }
+        .navbar-links a:hover {
+            background-color: rgba(255, 255, 255, 0.25); /* More visible hover */
+            transform: translateY(-2px) scale(1.02); /* Lift and slightly enlarge on hover */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+        }
+        /* Dropdown common styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #2c73d2; /* Same as navbar for consistency */
+            min-width: 180px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.25);
+            z-index: 1;
+            border-radius: 8px;
+            top: calc(100% + 8px); /* Position slightly below the main link */
+            left: 0;
+            overflow: hidden; /* For rounded corners */
+            opacity: 0; /* Start hidden for animation */
+            transform: translateY(-10px); /* Start slightly above for animation */
+            transition: opacity 0.2s ease-out, transform 0.2s ease-out; /* Smooth animation */
+        }
+        .dropdown-content a {
+            color: white;
+            padding: 12px 18px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+            border-radius: 0; /* No individual rounded corners for dropdown items */
+            transition: background-color 0.3s ease;
+            box-shadow: none; /* Remove individual link shadow */
+        }
+        .dropdown-content a:hover {
+            background-color: rgba(255, 255, 255, 0.25); /* Lighter hover for dropdown */
+            transform: none; /* No transform on dropdown items */
+            box-shadow: none;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+            opacity: 1; /* Fade in */
+            transform: translateY(0); /* Move to final position */
+        }
+
+        /* --- Navbar Responsive Adjustments (Refined) --- */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start; /* Align items to the start */
+                padding: 15px 10px;
+            }
+            .navbar .site-title {
+                font-size: 1.6rem; /* Adjusted for smaller screens */
+                margin-bottom: 15px; /* More space below title */
+                width: 100%;
+                text-align: center;
+                margin-right: 0;
+            }
+            .navbar-links {
+                width: 100%;
+                justify-content: center; /* Center links when wrapped */
+                gap: 8px; /* Reduced gap for more compact layout */
+            }
+            .navbar-links a {
+                padding: 8px 12px;
+                font-size: 0.9rem; /* Smaller font size */
+            }
+            body {
+                padding-top: 130px; /* Adjust body padding to accommodate expanded navbar */
+            }
+            .dropdown {
+                width: 100%; /* Make dropdown take full width on small screens */
+                text-align: center;
+            }
+            .dropdown-content {
+                width: 100%;
+                left: 0;
+                right: 0;
+                top: unset; /* Remove fixed top */
+                position: static; /* Allow dropdown to flow in line */
+                box-shadow: none;
+                border-radius: 0;
+                transform: translateY(0); /* No initial transform for mobile dropdown */
+                opacity: 1; /* Always visible on mobile if parent dropdown is shown */
+            }
+            .dropdown-content a {
+                padding: 10px;
+                border-radius: 0;
+            }
+        }
+        @media (max-width: 480px) {
+            .navbar-links a {
+                padding: 6px 10px;
+                font-size: 0.85rem;
+                flex-grow: 1; /* Allow links to grow to fill space */
+                text-align: center;
+            }
+            body {
+                padding-top: 110px;
+            }
+        }
+    

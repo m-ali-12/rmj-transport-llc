@@ -1,0 +1,139 @@
+/* Quote Page Styles */
+.quote-section {
+    padding: 60px 0;
+    background-color: #f9f9f9;
+}
+
+.quote-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.quote-form {
+    flex: 1;
+    min-width: 300px;
+    padding: 30px;
+}
+
+.quote-info {
+    flex: 1;
+    min-width: 300px;
+    padding: 30px;
+    background-color: #2c3e50;
+    color: #fff;
+}
+
+.quote-info h3 {
+    color: #fff;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.quote-info ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 30px;
+}
+
+.quote-info ul li {
+    margin-bottom: 10px;
+    padding-left: 25px;
+    position: relative;
+}
+
+.quote-info ul li i {
+    position: absolute;
+    left: 0;
+    top: 3px;
+    color: #3498db;
+}
+
+.contact-info {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.contact-info h4 {
+    margin-bottom: 15px;
+}
+
+.contact-info p {
+    margin-bottom: 10px;
+}
+
+.contact-info i {
+    margin-right: 10px;
+    color: #3498db;
+}
+
+.contact-info a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+.contact-info a:hover {
+    text-decoration: underline;
+}
+
+/* Form Styles */
+.form-control {
+    border-radius: 5px;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+}
+
+.form-control:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+}
+
+.btn-primary {
+    background-color: #3498db;
+    border-color: #3498db;
+    padding: 12px;
+    font-weight: 600;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+    border-color: #2980b9;
+}
+
+/* Status Messages */
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .quote-container {
+        flex-direction: column;
+    }
+    
+    .quote-form, .quote-info {
+        width: 100%;
+    }
+}

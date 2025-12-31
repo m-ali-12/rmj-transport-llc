@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Shipment Quote - MJ Hauling United LLC</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f4f4f4;
+        }
+
+        /* Header Styles */
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .contact-info {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .contact-info span {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Main Content */
+        .main-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 20px;
+        }
+
+        .quote-section {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            color: #1e3c72;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid #2a5298;
+            padding-bottom: 0.5rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #1e3c72;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #2a5298;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .quote-display {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+            border-left: 5px solid #2a5298;
+        }
+
+        .quote-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .detail-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 5px;
+            border: 1px solid #eee;
+        }
+
+        .detail-item strong {
+            color: #1e3c72;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .price-summary {
+            background: #1e3c72;
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .price-summary h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .price-summary .total-price {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1e3c72;
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            color: #ffd700;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p,
+        .footer-section li {
+            margin-bottom: 0.5rem;
+            opacity: 0.9;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li:before {
+            content: "→ ";
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #2a5298;
+            opacity: 0.8;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            border: 1px solid #f5c6cb;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                gap: 10px;
+                margin-top: 1rem;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .quote-details {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">MJ Hauling United LLC</div>
+            <div class="contact-info">
+                <span>📧 info@mjhaulingunitedllc.com</span>
+                <span>📞 (555) 123-4567</span>
+                <span>📍 Transportation Services</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- Quote Form Section -->
+        <div class="quote-section">
+            <h2 class="section-title">Get Your Car Shipment Quote</h2>
+            
+            <div id="messageContainer"></div>
+            
+            <form id="quoteForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="customerName">Full Name *</label>
+                        <input type="text" id="customerName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="customerEmail">Email Address *</label>
+                        <input type="email" id="customerEmail" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="customerPhone">Phone Number *</label>
+                        <input type="tel" id="customerPhone" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="pickupLocation">Pickup Location *</label>
+                        <input type="text" id="pickupLocation" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="deliveryLocation">Delivery Location *</label>
+                        <input type="text" id="deliveryLocation" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="vehicleYear">Vehicle Year *</label>
+                        <input type="number" id="vehicleYear" min="1980" max="2025" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="vehicleMake">Vehicle Make *</label>
+                        <input type="text" id="vehicleMake" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="vehicleModel">Vehicle Model *</label>
+                        <input type="text" id="vehicleModel" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="vehicleType">Vehicle Type *</label>
+                        <select id="vehicleType" required>
+                            <option value="">Select Vehicle Type</option>
+                            <option value="sedan">Sedan</option>
+                            <option value="suv">SUV</option>
+                            <option value="truck">Truck</option>
+                            <option value="motorcycle">Motorcycle</option>
+                            <option value="van">Van</option>
+                            <option value="luxury">Luxury Car</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="transportType">Transport Type *</label>
+                        <select id="transportType" required>
+                            <option value="">Select Transport Type</option>
+                            <option value="open">Open Transport</option>
+                            <option value="enclosed">Enclosed Transport</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="shipmentDate">Preferred Shipment Date *</label>
+                        <input type="date" id="shipmentDate" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="distance">Distance (miles) *</label>
+                        <input type="number" id="distance" min="1" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="specialInstructions">Special Instructions</label>
+                    <textarea id="specialInstructions" rows="4" placeholder="Any special requirements or instructions..."></textarea>
+                </div>
+                
+                <button type="submit" class="btn">Generate Quote</button>
+            </form>
+        </div>
+
+        <!-- Quote Display Section -->
+        <div id="quoteDisplay" class="quote-section hidden">
+            <h2 class="section-title">Your Shipment Quote</h2>
+            
+            <div class="quote-display">
+                <div class="quote-details" id="quoteDetails">
+                    <!-- Quote details will be populated here -->
+                </div>
+                
+                <!-- Removed the price-summary section completely -->
+            </div>
+            
+            <div style="margin-top: 2rem;">
+                <button onclick="sendQuoteEmail()" class="btn">Send Quote to Email</button>
+                <button onclick="generatePDF()" class="btn btn-secondary">Download PDF</button>
+                <button onclick="resetForm()" class="btn btn-secondary">New Quote</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>MJ Hauling United LLC</h3>
+                <p>Professional car shipping and transportation services across the United States. Safe, reliable, and timely delivery guaranteed.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Services</h3>
+                <ul>
+                    <li>Open Car Transport</li>
+                    <li>Enclosed Car Transport</li>
+                    <li>Motorcycle Shipping</li>
+                    <li>Commercial Vehicle Transport</li>
+                    <li>Expedited Shipping</li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <p>📧 info@mjhaulingunitedllc.com</p>
+                <p>📞 (555) 123-4567</p>
+                <p>⏰ Mon-Fri: 8AM-6PM</p>
+                <p>⏰ Sat: 9AM-4PM</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Coverage Areas</h3>
+                <ul>
+                    <li>Nationwide Coverage</li>
+                    <li>Door-to-Door Service</li>
+                    <li>Terminal-to-Terminal</li>
+                    <li>Interstate Transport</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 MJ Hauling United LLC. All rights reserved. | Licensed & Insured | DOT#: 123456</p>
+        </div>
+    </footer>
+
+    <script>
+        // Form submission handler
+        document.getElementById('quoteForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                customerName: document.getElementById('customerName').value,
+                customerEmail: document.getElementById('customerEmail').value,
+                customerPhone: document.getElementById('customerPhone').value,
+                pickupLocation: document.getElementById('pickupLocation').value,
+                deliveryLocation: document.getElementById('deliveryLocation').value,
+                vehicleYear: document.getElementById('vehicleYear').value,
+                vehicleMake: document.getElementById('vehicleMake').value,
+                vehicleModel: document.getElementById('vehicleModel').value,
+                vehicleType: document.getElementById('vehicleType').value,
+                transportType: document.getElementById('transportType').value,
+                shipmentDate: document.getElementById('shipmentDate').value,
+                distance: parseInt(document.getElementById('distance').value),
+                specialInstructions: document.getElementById('specialInstructions').value
+            };
+            
+            // Create a dummy quote object (since calculation is removed)
+            const quote = {};
+            
+            displayQuote(formData, quote);
+        });
+
+        // Display quote results
+        function displayQuote(formData, quote) {
+            const quoteDetailsContainer = document.getElementById('quoteDetails');
+            
+            quoteDetailsContainer.innerHTML = `
+                <div class="detail-item">
+                    <strong>Customer Information</strong>
+                    ${formData.customerName}<br>
+                    ${formData.customerEmail}<br>
+                    ${formData.customerPhone}
+                </div>
+                <div class="detail-item">
+                    <strong>Vehicle Details</strong>
+                    ${formData.vehicleYear} ${formData.vehicleMake} ${formData.vehicleModel}<br>
+                    Type: ${formData.vehicleType.charAt(0).toUpperCase() + formData.vehicleType.slice(1)}
+                </div>
+                <div class="detail-item">
+                    <strong>Transport Details</strong>
+                    ${formData.transportType.charAt(0).toUpperCase() + formData.transportType.slice(1)} Transport<br>
+                    Distance: ${formData.distance} miles
+                </div>
+                <div class="detail-item">
+                    <strong>Route</strong>
+                    From: ${formData.pickupLocation}<br>
+                    To: ${formData.deliveryLocation}<br>
+                    Date: ${formData.shipmentDate}
+                </div>
+                <div class="detail-item">
+                    <strong>Special Instructions</strong>
+                    ${formData.specialInstructions || 'None'}
+                </div>
+            `;
+            
+            // Show quote display section
+            document.getElementById('quoteDisplay').classList.remove('hidden');
+            document.getElementById('quoteDisplay').scrollIntoView({ behavior: 'smooth' });
+            
+            // Store quote data globally for email/PDF generation
+            window.currentQuote = { formData, quote };
+        }
+
+        // Send quote via email (simulation)
+        function sendQuoteEmail() {
+            if (!window.currentQuote) return;
+            
+            const { formData, quote } = window.currentQuote;
+            
+            // In a real implementation, this would call your backend API
+            // For demonstration, we'll show a success message
+            const messageContainer = document.getElementById('messageContainer');
+            messageContainer.innerHTML = `
+                <div class="success-message">
+                    <strong>Quote Sent Successfully!</strong><br>
+                    A detailed quote has been sent to ${formData.customerEmail}.<br>
+                    You should receive it within 5-10 minutes.
+                </div>
+            `;
+            
+            // Here you would typically make an API call like:
+            // fetch('/api/send-quote', {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify({ formData, quote })
+            // });
+            
+            console.log('Quote data to be sent:', { formData, quote });
+        }
+
+        // Generate PDF
+        function generatePDF() {
+            if (!window.currentQuote) return;
+            
+            const { formData, quote } = window.currentQuote;
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Set up PDF styling
+            doc.setFontSize(20);
+            doc.setTextColor(30, 60, 114);
+            doc.text('MJ Hauling United LLC', 20, 30);
+            doc.setFontSize(14);
+            doc.setTextColor(0, 0, 0);
+            doc.text('Car Shipment Quote', 20, 40);
+            
+            // Add quote details
+            let yPosition = 60;
+            const lineHeight = 10;
+            
+            doc.setFontSize(12);
+            doc.setFont(undefined, 'bold');
+            doc.text('Customer Information:', 20, yPosition);
+            yPosition += lineHeight;
+            
+            doc.setFont(undefined, 'normal');
+            doc.text(`Name: ${formData.customerName}`, 20, yPosition);
+            yPosition += lineHeight;
+            doc.text(`Email: ${formData.customerEmail}`, 20, yPosition);
+            yPosition += lineHeight;
+            doc.text(`Phone: ${formData.customerPhone}`, 20, yPosition);
+            yPosition += lineHeight * 2;
+            
+            doc.setFont(undefined, 'bold');
+            doc.text('Vehicle Information:', 20, yPosition);
+            yPosition += lineHeight;
+            
+            doc.setFont(undefined, 'normal');
+            doc.text(`Vehicle: ${formData.vehicleYear} ${formData.vehicleMake} ${formData.vehicleModel}`, 20, yPosition);
+            yPosition += lineHeight;
+            doc.text(`Type: ${formData.vehicleType.charAt(0).toUpperCase() + formData.vehicleType.slice(1)}`, 20, yPosition);
+            yPosition += lineHeight;
+            doc.text(`Transport: ${formData.transportType.charAt(0).toUpperCase() + formData.transportType.slice(1)}`, 20, yPosition);
+            yPosition += lineHeight * 2;
+            
+            doc.setFont(undefined, 'bold');
+            doc.text('Shipment Details:', 20, yPosition);
+            yPosition += lineHeight;
+            
+            doc.setFont(undefined, 'normal');
+            doc.text(`From: ${formData.pickupLocation}`, 20, yPosition);
+            yPosition += lineHeight;
+            doc.text(`To: ${formData.deliveryLocation}`, 20, yPosition);
+            yPosition += lineHeight;
+            doc.text(`Date: ${formData.shipmentDate}`, 20, yPosition);
+            yPosition += lineHeight;
+            doc.text(`Distance: ${formData.distance} miles`, 20, yPosition);
+            yPosition += lineHeight * 2;
+            
+            doc.setFont(undefined, 'bold');
+            doc.text('Special Instructions:', 20, yPosition);
+            yPosition += lineHeight;
+            
+            doc.setFont(undefined, 'normal');
+            doc.text(`${formData.specialInstructions || 'None'}`, 20, yPosition);
+            yPosition += lineHeight * 2;
+            
+            // Add footer
+            doc.setFontSize(10);
+            doc.setTextColor(100, 100, 100);
+            doc.text('MJ Hauling United LLC - Professional Car Shipping Services', 20, 280);
+            doc.text('Email: info@mjhaulingunitedllc.com | Phone: (555) 123-4567', 20, 290);
+            
+            // Save PDF
+            doc.save(`Car_Shipment_Quote_${formData.customerName.replace(/\s+/g, '_')}.pdf`);
+        }
+
+        // Reset form
+        function resetForm() {
+            document.getElementById('quoteForm').reset();
+            document.getElementById('quoteDisplay').classList.add('hidden');
+            document.getElementById('messageContainer').innerHTML = '';
+            window.currentQuote = null;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Set minimum date to today
+        document.getElementById('shipmentDate').min = new Date().toISOString().split('T')[0];
+    </script>
+</body>
+</html>

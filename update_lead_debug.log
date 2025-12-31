@@ -1,0 +1,7 @@
+[2025-07-29 07:42:15] update_lead.php started. Method: POST
+[2025-07-29 07:42:15] Database connection successful.
+[2025-07-29 07:42:15] Checking CSRF token...
+[2025-07-29 07:42:15] CSRF token matched. Unsetting session token.
+[2025-07-29 07:42:15] Collected data - ID: 21, Name: N/A, Quote Amount: N/A
+[2025-07-29 07:42:15] Missing required lead details or invalid ID for update. ID: 21, Name Empty: Yes, Quote Amount Empty: Yes, Quote ID Empty: Yes, Quote Date Empty: Yes
+[2025-07-29 07:42:15] Redirecting to view_leads.php with status=error and message=Missing required lead details or invalid ID for update.
